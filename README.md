@@ -1,6 +1,6 @@
 # flutter_app
 
-A new Flutter application.
+A  Flutter simple example about Provider , MVVM, API, Json, Isolate.
 
 ## Getting Started
 
