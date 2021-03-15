@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,18 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO: 使用Provider提供UserInfo及Counter業務邏輯
-    return MultiProvider(
-      providers: [
-        //基本的Provider容器
-        Provider<UserInfo>(create: (_) => UserInfo()),
-        //帶有更新通知的Provider容器
-        ChangeNotifierProvider<Counter>(create: (_) => Counter())
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo about Provider',
-        theme: ThemeData.dark(),
-        home: MyHomePage(),
-      ),
+    return MaterialApp(
+      title: 'Flutter Demo about Provider',
+      theme: ThemeData.dark(),
+      home: MyHomePage(),
     );
   }
 }
@@ -44,33 +35,28 @@ class MyHomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                //TODO: [Method1]使用context.read<T>讀取使用者姓名
                 Text(
-                  //TODO: [Method1]使用context.read<T>讀取使用者姓名
-                  'Name: ${context.read<UserInfo>().name}',
+                  'Name: ',
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
+                //TODO: [Method２]使用Provider.of<T>(context)讀取使用者年齡
                 Text(
-                  //TODO: [Method２]使用Provider.of<T>(context)讀取使用者年齡
-                  'Age: ${Provider.of<UserInfo>(context).age}',
+                  'Age: ',
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
             ),
             //TODO: [Method3] 使用Consumer<T>監聽計數器count值
-            Consumer<Counter>(
-              builder: (context, model, child) {
-                return Text(
-                  model.count.toString(),
-                  style: Theme.of(context).textTheme.headline6,
-                );
-              },
+            Text(
+              '',
+              style: Theme.of(context).textTheme.headline6,
             ),
             //TODO: [Method4] 使用context.watch<T>監聽計數器count值
-            Text('${context.watch<Counter>().count}',
-                style: Theme.of(context).textTheme.headline6),
+            Text('', style: Theme.of(context).textTheme.headline6),
             //TODO: [Method5] 使用context.select<T>監聽計數器count值
             Text(
-              '${context.select<Counter, int>((counter) => counter.count)}',
+              '',
               style: Theme.of(context).textTheme.headline6,
             )
           ],
@@ -80,7 +66,6 @@ class MyHomePage extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () {
           //TODO: 呼叫計數器業務 "increment()" method(PS. context.read<T> or Provider.of(context ,listen: false)
-          Provider.of<Counter>(context, listen: false).increment();
         },
       ),
     );

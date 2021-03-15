@@ -23,4 +23,11 @@ class Photo {
       url: json['url'] as String,
     );
   }*/
+
+// Map<String, dynamic> toJson() => {
+//       'id': this.id,
+//       'title': this.title,
+//       'thumbnailUrl': this.thumbnailUrl,
+//       'url': this.url
+//     };
 }

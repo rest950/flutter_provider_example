@@ -17,6 +17,8 @@ class PhotoGridViewModel {
       final response = await ApiService().fetchPhotos();
       if (response.statusCode == 200) {
         //return parsedPhotos(response.body);
+
+        //另外開啟isolate處理耗時運算
         return await compute(parsedPhotos, response.body);
       }
       return <Photo>[];
