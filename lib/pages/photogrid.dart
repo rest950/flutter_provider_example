@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/model/photo.dart';
+import 'package:flutter_app/service/userrepository.dart';
 import 'package:flutter_app/viewmodel/photogrid_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,13 @@ class PhotoGridPage extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.popAndPushNamed(context, '/home'),
           ),
-          title: Text('Photos Grid'),
+          title:
+              Text('${context.read<UserRepository>().userName}\'s Photos Grid'),
+          actions: [
+            Align(
+                alignment: Alignment.bottomRight,
+                child: Text(context.read<UserRepository>().currentTime))
+          ],
         ),
         body: Consumer<List<Photo>>(
           builder: (context, photos, child) {
