@@ -14,7 +14,10 @@ class HomePage extends StatelessWidget {
           actions: [
             Align(
                 alignment: Alignment.bottomRight,
-                child: Text(context.read<UserRepository>().currentTime))
+                child:
+                    Consumer<UserRepository>(builder: (context, model, child) {
+                  return Text(model.currentTime);
+                }))
           ],
         ),
         body: Center(child: Consumer<HomePageViewModel>(
@@ -27,9 +30,28 @@ class HomePage extends StatelessWidget {
             return Container();
           },
         )),
+        //TODO: Add Navigation Drawer
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Image.network(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbVg0JCFzD1T0R93AGYV_h2AiOWAlEJgCkew&usqp=CAU'),
+              ),
+              ListTile(
+                title: Text('Home'),
+                selected: true,
+              ),
+              ListTile(
+                title: Text('PhotoGrid'),
+                onTap: () => Navigator.popAndPushNamed(context, '/photoGrid'),
+              )
+            ],
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           child: Text('Next'),
-          onPressed: () => Navigator.popAndPushNamed(context, '/photoGrid'),
+          onPressed: () => Navigator.pushNamed(context, '/photoGrid'),
         ),
       ),
     );

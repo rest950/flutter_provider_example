@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/homepage.dart';
+import 'package:flutter_app/pages/individualphoto.dart';
 import 'package:flutter_app/pages/photogrid.dart';
 import 'package:flutter_app/service/userrepository.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Provider<UserRepository>(
+    return ChangeNotifierProvider<UserRepository>(
       create: (_) => UserRepository(), //注入使用者資料
       child: MaterialApp(
         title: 'Flutter Demo for Provider implement MVVM',
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
           //路由設定
           '/home': (context) => HomePage(),
           '/photoGrid': (context) => PhotoGridPage(),
+          //TODO: 新增個別相片頁
+          '/individualPhoto': (context) => IndividualPhotoPage(),
         },
       ),
     );
