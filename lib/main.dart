@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/homepage.dart';
 import 'package:flutter_app/pages/individualphoto.dart';
-import 'package:flutter_app/pages/photogrid.dart';
 import 'package:flutter_app/service/userrepository.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         routes: {
           //路由設定
           '/home': (context) => HomePage(),
-          '/photoGrid': (context) => PhotoGridPage(),
+          //'/photoGrid': (context) => PhotoGridPage(),
           //TODO: 新增個別相片頁
           '/individualPhoto': (context) => IndividualPhotoPage(),
         },

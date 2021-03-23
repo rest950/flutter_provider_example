@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/photogrid.dart';
 import 'package:flutter_app/service/userrepository.dart';
 import 'package:flutter_app/viewmodel/homepage_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -20,16 +21,17 @@ class HomePage extends StatelessWidget {
                 }))
           ],
         ),
-        body: Center(child: Consumer<HomePageViewModel>(
-          builder: (context, viewModel, child) {
-            //如有相片來源則顯示
-            if (viewModel.imgSrc != null) {
-              return Image.network(viewModel.imgSrc);
-            }
-            //否則回傳空
-            return Container();
+        body: Consumer<HomePageViewModel>(
+          builder: (_, viewModel, child) {
+            return IndexedStack(
+              index: viewModel.index,
+              children: [
+                RandomPhotoPage(),
+                PhotoGridPage(),
+              ],
+            );
           },
-        )),
+        ),
         //TODO: Add Navigation Drawer
         drawer: Drawer(
           child: ListView(
@@ -38,22 +40,59 @@ class HomePage extends StatelessWidget {
                 child: Image.network(
                     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbVg0JCFzD1T0R93AGYV_h2AiOWAlEJgCkew&usqp=CAU'),
               ),
-              ListTile(
-                title: Text('Home'),
-                selected: true,
+              Consumer<HomePageViewModel>(
+                builder: (_, viewModel, child) {
+                  return ListTile(
+                    leading: Icon(Icons.home),
+                    title: Text('Home'),
+                    selected: viewModel.index == 0,
+                    onTap: () => viewModel.index = 0,
+                  );
+                },
               ),
-              ListTile(
-                title: Text('PhotoGrid'),
-                onTap: () => Navigator.popAndPushNamed(context, '/photoGrid'),
+              Consumer<HomePageViewModel>(
+                builder: (_, viewModel, child) {
+                  return ListTile(
+                    leading: Icon(Icons.photo),
+                    title: Text('PhotoGrid'),
+                    selected: viewModel.index == 1,
+                    onTap: () => viewModel.index = 1,
+                  );
+                },
               )
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Text('Next'),
-          onPressed: () => Navigator.pushNamed(context, '/photoGrid'),
+        bottomNavigationBar: Consumer<HomePageViewModel>(
+          builder: (_, viewModel, child) {
+            return BottomNavigationBar(
+              currentIndex: viewModel.index,
+              items: [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.photo), label: 'PhotoGrid'),
+              ],
+              onTap: (newIndex) => viewModel.index = newIndex,
+            );
+          },
         ),
       ),
     );
+  }
+}
+
+class RandomPhotoPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Consumer<HomePageViewModel>(
+      builder: (context, viewModel, child) {
+        //如有相片來源則顯示
+        if (viewModel.imgSrc != null) {
+          return Image.network(viewModel.imgSrc);
+        }
+        //否則回傳空
+        return Container();
+      },
+    ));
   }
 }

@@ -11,6 +11,15 @@ class HomePageViewModel extends ChangeNotifier {
   Timer _timer;
   Random _random;
 
+  int _index = 0;
+
+  int get index => _index;
+
+  set index(newValue) {
+    _index = newValue;
+    notifyListeners();
+  }
+
   HomePageViewModel() {
     _random = Random();
     _timer = Timer.periodic(Duration(seconds: 5), (timer) async {
