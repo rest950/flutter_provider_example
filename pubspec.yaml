@@ -31,7 +31,6 @@ dependencies:
   share: ^2.0.1
   path_provider: ^2.0.1
 
-  local_auth: ^1.1.0
 
   flutter:
     sdk: flutter
